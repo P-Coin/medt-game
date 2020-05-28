@@ -1,0 +1,43 @@
+* {
+    font-family: Bahnschrift, "Adobe Devanagari", sans-serif;
+}
+
+.center {
+    text-align: center;
+}
+
+#game-link {
+    background-color: darkolivegreen;
+}
+
+/* TODO: Farbe ändern*/
+#project-link {
+    background-color: #7b6923;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    font-size: 1.2em;
+}
+
+nav {
+    background-color: #292929;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+nav div {
+    width: 20%;
+    height: 50px;
+    display:flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
