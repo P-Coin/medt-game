@@ -1,0 +1,12 @@
+canvas {
+    border: 2px solid black;
+}
+
+canvas {
+    display: block;
+    width: 50vw;
+    min-width: 500px;
+    height: 500px;
+    margin: 20px auto;
+    box-sizing: border-box;
+}
