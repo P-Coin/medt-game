@@ -4,8 +4,7 @@ canvas {
 
 canvas {
     display: block;
-    width: 50vw;
-    min-width: 500px;
+    width: 900px;
     height: 500px;
     margin: 20px auto;
     box-sizing: border-box;
