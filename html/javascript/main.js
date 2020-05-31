@@ -8,12 +8,10 @@ const height = 500;
 
 let xPlayer;
 let yPlayer;
-const playerWidth = 100;
-const playerHeight = 100;
+const gridWidth = 100;
+const gridHeight = 100;
 let imagePlayer;
 const speed = 100;
-const gridWith = 100;
-const gridHeight = 100;
 
 
 function init() {
@@ -38,10 +36,10 @@ function movePlayer(event) {
     ctx.clearRect(0, 0, 900, 500);
     // down
     if (event.key === "ArrowDown") {
-        if (yPlayer < 500-playerHeight) {
+        if (yPlayer < 500-gridHeight) {
             yPlayer += speed;
         } else {
-            yPlayer = 500 - playerHeight;
+            yPlayer = 500 - gridHeight;
         }
     }
     // up
@@ -63,10 +61,10 @@ function movePlayer(event) {
 
     // right
     if (event.key === "ArrowRight") {
-        if (xPlayer + playerWidth + speed < width) {
+        if (xPlayer + gridWidth + speed < width) {
             xPlayer += speed;
         } else {
-            xPlayer = width-playerWidth;
+            xPlayer = width-gridWidth;
         }
     }
 
