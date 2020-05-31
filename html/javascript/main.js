@@ -8,10 +8,12 @@ const height = 500;
 
 let xPlayer;
 let yPlayer;
-const playerWidth = 80;
-const playerHeight = 80;
+const playerWidth = 100;
+const playerHeight = 100;
 let imagePlayer;
-const speed = 7;
+const speed = 100;
+const gridWith = 100;
+const gridHeight = 100;
 
 
 function init() {
@@ -28,6 +30,9 @@ function init() {
 }
 
 window.addEventListener("keydown", movePlayer)
+
+requestAnimationFrame(draw);
+window.setInterval(draw, 800);
 
 function movePlayer(event) {
     ctx.clearRect(0, 0, 900, 500);
@@ -65,5 +70,28 @@ function movePlayer(event) {
         }
     }
 
+    draw();
+}
+
+// Grid-like game
+
+function draw() {
+    ctx.clearRect(0, 0, width+100, 500);
+    drawGrid();
     ctx.drawImage(imagePlayer, xPlayer, yPlayer);
+}
+
+function drawGrid() {
+    for(let i = 0; i < 9; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i*100, 0);
+        ctx.lineTo(i*100, height);
+        ctx.stroke();
+    }
+    for(let i = 0; i < 6; i++) {
+        ctx.beginPath();
+        ctx.moveTo(0, i*100);
+        ctx.lineTo(width, i*100);
+        ctx.stroke();
+    }
 }
