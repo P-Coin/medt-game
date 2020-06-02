@@ -12,26 +12,26 @@ const gridWidth = 25;
 const gridHeight = 25;
 let imagePlayer;
 const speed = 25;
-let direction = 'up';
+let direction = undefined;
 
 
 function init() {
-    xPlayer = 101;
-    yPlayer = 101;
+    xPlayer = 100;
+    yPlayer = 100;
 
     // Image initialization
     imagePlayer = new Image();
     imagePlayer.onload = function () {
         ctx.drawImage(imagePlayer, xPlayer, yPlayer);
     }
-    imagePlayer.src = 'images/player.png';
+    imagePlayer.src = 'images/head.png';
 
 }
 
 window.addEventListener("keydown", changeDirection)
 
 requestAnimationFrame(draw);
-window.setInterval(draw, 150);
+window.setInterval(draw, 100);
 
 function changeDirection(event) {
     // down
@@ -54,25 +54,9 @@ function changeDirection(event) {
 }
 
 function draw() {
-    ctx.clearRect(0, 0, width, 500);
-    drawGrid();
+    ctx.clearRect(0, 0, width, height);
     drawSnake();
     ctx.drawImage(imagePlayer, xPlayer, yPlayer);
-}
-
-function drawGrid() {
-    for(let i = 0; i < 36; i++) {
-        ctx.beginPath();
-        ctx.moveTo(i*25, 0);
-        ctx.lineTo(i*25, height);
-        ctx.stroke();
-    }
-    for(let i = 0; i < 20; i++) {
-        ctx.beginPath();
-        ctx.moveTo(0, i*25);
-        ctx.lineTo(width, i*25);
-        ctx.stroke();
-    }
 }
 
 
@@ -81,7 +65,7 @@ function drawSnake() {
         if (yPlayer < 500-gridHeight) {
             yPlayer += speed;
         } else {
-            yPlayer = 500 - gridHeight + 1;
+            yPlayer = 500 - gridHeight;
         }
     }
     // up
@@ -89,7 +73,7 @@ function drawSnake() {
         if (yPlayer - speed > 0) {
             yPlayer -= speed;
         } else {
-            yPlayer = 1;
+            yPlayer = 0;
         }
     }
     // left
@@ -97,7 +81,7 @@ function drawSnake() {
         if (xPlayer - speed > 0) {
             xPlayer -= speed;
         } else {
-            xPlayer = 1;
+            xPlayer = 0;
         }
     }
 
@@ -106,7 +90,7 @@ function drawSnake() {
         if (xPlayer + gridWidth + speed < width) {
             xPlayer += speed;
         } else {
-            xPlayer = width-gridWidth+1;
+            xPlayer = width-gridWidth;
         }
     }
 }
