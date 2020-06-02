@@ -23,7 +23,7 @@ function init() {
     imagePlayer.onload = function () {
         ctx.drawImage(imagePlayer, xPlayer, yPlayer);
     }
-    imagePlayer.src = 'images/Pcoin3.png';
+    imagePlayer.src = 'images/pcoin.png';
 
 }
 
