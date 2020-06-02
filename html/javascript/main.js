@@ -8,88 +8,105 @@ const height = 500;
 
 let xPlayer;
 let yPlayer;
-const gridWidth = 100;
-const gridHeight = 100;
+const gridWidth = 25;
+const gridHeight = 25;
 let imagePlayer;
-const speed = 100;
+const speed = 25;
+let direction = 'up';
 
 
 function init() {
-    xPlayer = 200;
-    yPlayer = 200;
+    xPlayer = 101;
+    yPlayer = 101;
 
     // Image initialization
     imagePlayer = new Image();
     imagePlayer.onload = function () {
         ctx.drawImage(imagePlayer, xPlayer, yPlayer);
     }
-    imagePlayer.src = 'images/pcoin.png';
+    imagePlayer.src = 'images/player.png';
 
 }
 
-window.addEventListener("keydown", movePlayer)
+window.addEventListener("keydown", changeDirection)
 
 requestAnimationFrame(draw);
-window.setInterval(draw, 800);
+window.setInterval(draw, 150);
 
-function movePlayer(event) {
-    ctx.clearRect(0, 0, 900, 500);
+function changeDirection(event) {
     // down
     if (event.key === "ArrowDown") {
-        if (yPlayer < 500-gridHeight) {
-            yPlayer += speed;
-        } else {
-            yPlayer = 500 - gridHeight;
-        }
+        direction = 'down';
     }
     // up
     if (event.key === "ArrowUp") {
-        if (yPlayer - speed > 0) {
-            yPlayer -= speed;
-        } else {
-            yPlayer = 0;
-        }
+        direction = 'up';
     }
     // left
     if (event.key === "ArrowLeft") {
-        if (xPlayer - speed > 0) {
-            xPlayer -= speed;
-        } else {
-            xPlayer = 0;
-        }
+        direction = 'left'
     }
 
     // right
     if (event.key === "ArrowRight") {
-        if (xPlayer + gridWidth + speed < width) {
-            xPlayer += speed;
-        } else {
-            xPlayer = width-gridWidth;
-        }
+        direction = 'right';
     }
-
-    draw();
 }
 
-// Grid-like game
-
 function draw() {
-    ctx.clearRect(0, 0, width+100, 500);
+    ctx.clearRect(0, 0, width, 500);
     drawGrid();
+    drawSnake();
     ctx.drawImage(imagePlayer, xPlayer, yPlayer);
 }
 
 function drawGrid() {
-    for(let i = 0; i < 9; i++) {
+    for(let i = 0; i < 36; i++) {
         ctx.beginPath();
-        ctx.moveTo(i*100, 0);
-        ctx.lineTo(i*100, height);
+        ctx.moveTo(i*25, 0);
+        ctx.lineTo(i*25, height);
         ctx.stroke();
     }
-    for(let i = 0; i < 6; i++) {
+    for(let i = 0; i < 20; i++) {
         ctx.beginPath();
-        ctx.moveTo(0, i*100);
-        ctx.lineTo(width, i*100);
+        ctx.moveTo(0, i*25);
+        ctx.lineTo(width, i*25);
         ctx.stroke();
+    }
+}
+
+
+function drawSnake() {
+    if (direction === "down") {
+        if (yPlayer < 500-gridHeight) {
+            yPlayer += speed;
+        } else {
+            yPlayer = 500 - gridHeight + 1;
+        }
+    }
+    // up
+    if (direction === "up") {
+        if (yPlayer - speed > 0) {
+            yPlayer -= speed;
+        } else {
+            yPlayer = 1;
+        }
+    }
+    // left
+    if (direction === 'left') {
+        if (xPlayer - speed > 0) {
+            xPlayer -= speed;
+        } else {
+            xPlayer = 1;
+        }
+    }
+
+    // right
+    if (direction === 'right') {
+        if (xPlayer + gridWidth + speed < width) {
+            xPlayer += speed;
+        } else {
+            xPlayer = width-gridWidth+1;
+        }
     }
 }
