@@ -14,6 +14,10 @@ let imagePlayer;
 const speed = 25;
 let direction = undefined;
 
+let body = [];
+let lastX;
+let lastY;
+
 
 function init() {
     xPlayer = 100;
@@ -31,7 +35,7 @@ function init() {
 window.addEventListener("keydown", changeDirection)
 
 requestAnimationFrame(draw);
-window.setInterval(draw, 100);
+window.setInterval(draw, 250);
 
 function changeDirection(event) {
     // down
@@ -50,6 +54,10 @@ function changeDirection(event) {
     // right
     if (event.key === "ArrowRight") {
         direction = 'right';
+    }
+
+    if (event.key === " ") {
+        addChildren();
     }
 }
 
@@ -93,4 +101,24 @@ function drawSnake() {
             xPlayer = width-gridWidth;
         }
     }
+
+    body.forEach(drawBody);
 }
+
+function addChildren() {
+    let imageChild = new Image();
+    imageChild.src = 'images/body.png';
+    let child = {'x': lastX, 'y': lastY, 'image': imageChild};
+    body.push(child);
+}
+
+function drawBody(entry) {
+    ctx.drawImage(entry.image, entry.x, entry.y);
+    let child = body.pop();
+    lastX = child.x;
+    lastY = child.y;
+    child.x = xPlayer;
+    child.y = yPlayer;
+    body.unshift(child);
+}
+
