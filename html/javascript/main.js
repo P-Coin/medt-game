@@ -83,23 +83,23 @@ function changeDirection(event) {
     lastDir = direction;
 
     // down
-    if (event.key === 'ArrowDown') {
+    if (event.key === 'ArrowDown' || event.key.toLowerCase() === 's') {
         direction = (lastDir !== 'up' || body.length === 1) ? 'down' : 'up';
         event.preventDefault();
     }
     // up
-    if (event.key === 'ArrowUp') {
+    if (event.key === 'ArrowUp' || event.key.toLowerCase() === 'w') {
         direction = (lastDir !== 'down' || body.length === 1) ? 'up' : 'down';
         event.preventDefault();
     }
     // left
-    if (event.key === 'ArrowLeft') {
+    if (event.key === 'ArrowLeft' || event.key.toLowerCase() === 'a') {
         direction = (lastDir !== 'right' || body.length === 1) ? 'left' : 'right';
         event.preventDefault();
     }
 
     // right
-    if (event.key === 'ArrowRight') {
+    if (event.key === 'ArrowRight' || event.key.toLowerCase() === 'd') {
         direction = (lastDir !== 'left' || body.length === 1) ? 'right' : 'left';
         event.preventDefault();
     }
