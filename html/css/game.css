@@ -21,3 +21,10 @@ canvas {
 #difficulty h2 {
     text-align: center;
 }
+
+main {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+}
+

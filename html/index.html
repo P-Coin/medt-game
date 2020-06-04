@@ -23,9 +23,15 @@ Raffael Kusolitsch & Bernhard Hösch
 
 <div id="container">
     <main>
-        <canvas width="900" height="500" id="game">
+        <canvas width="900" height="500" id="game" tabindex="0">
             <p>Your browser doesn't support Canvas!</p>
         </canvas>
+
+        <section>
+            <h1 id="score">Score: 0</h1>
+            <h1 id="highscore">Highscore: 0</h1>
+
+        </section>
     </main>
 
     <section id="difficulty">
@@ -33,13 +39,16 @@ Raffael Kusolitsch & Bernhard Hösch
         <form action="">
 
             <label for="easy">Easy</label>
-            <input type="radio" id="easy" name="difficulty" value="easy">
+            <input type="radio" id="easy" name="difficulty" value="easy" onclick="init()">
 
             <label for="medium">Medium</label>
-            <input type="radio" id="medium" name="difficulty" value="medium">
+            <input type="radio" id="medium" name="difficulty" value="medium" checked onclick="init()">
 
             <label for="hard">Hard</label>
-            <input type="radio" id="hard" name="difficulty" value="hard">
+            <input type="radio" id="hard" name="difficulty" value="hard" onclick="init()">
+
+            <label for="expert">Expert</label>
+            <input type="radio" id="expert" name="difficulty" value="expert" onclick="init()">
 
         </form>
     </section>

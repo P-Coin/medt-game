@@ -1,6 +1,6 @@
 'use strict'
 
-// TODO: Leaderboards, Powerups, Difficulty
+// TODO: Leaderboard, Power ups
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
@@ -10,19 +10,14 @@ const height = 500;
 
 let xPlayer;
 let yPlayer;
-const gridWidth = 25;
-const gridHeight = 25;
-let imagePlayer;
 const speed = 25;
 let direction = undefined;
 let lastDir = undefined;
 let appleExists = false;
 let apple;
-
+let score = 0;
 
 let body = [];
-let lastX;
-let lastY;
 let requestId = undefined;
 let intervalID = undefined;
 
@@ -33,38 +28,72 @@ function init() {
     direction = undefined;
     appleExists = false;
 
-    imagePlayer = new Image();
-    imagePlayer.src = 'images/body.png';
-    let child = {'x': xPlayer, 'y': yPlayer, 'image': imagePlayer};
-    body.push(child);
-    window.clearInterval(intervalID);
-    window.cancelAnimationFrame(requestId);
-    let speed = 50;
+    addChild(xPlayer, yPlayer);
+    stopAnimation();
+    startAnimation();
+}
+
+function startAnimation() {
+    let speed = getSpeed();
     intervalID = window.setInterval(draw, speed);
     requestId = requestAnimationFrame(draw);
 }
 
-window.addEventListener('keydown', changeDirection);
+function getSpeed() {
+    let difficulty = document.getElementsByName('difficulty');
+    let speed = 0;
+    for(let i = 0; i < difficulty.length; i++) {
+        if (difficulty[i].checked) {
+            switch(difficulty[i].value) {
+                case 'easy':
+                    speed = 80;
+                    break;
+                case 'medium':
+                    speed = 70;
+                    break;
+                case 'hard':
+                    speed = 40;
+                    break;
+                case 'expert':
+                    speed = 20;
+                    break;
+            }
+        }
+    }
 
+    return speed;
+}
+
+function stopAnimation() {
+    window.clearInterval(intervalID);
+    window.cancelAnimationFrame(requestId);
+}
+
+window.addEventListener('keydown', changeDirection);
 
 function changeDirection(event) {
     lastDir = direction;
+
     // down
     if (event.key === 'ArrowDown') {
         direction = (lastDir !== 'up' || body.length === 1) ? 'down' : 'up';
+        event.preventDefault();
     }
     // up
     if (event.key === 'ArrowUp') {
         direction = (lastDir !== 'down' || body.length === 1) ? 'up' : 'down';
+        event.preventDefault();
     }
     // left
     if (event.key === 'ArrowLeft') {
         direction = (lastDir !== 'right' || body.length === 1) ? 'left' : 'right';
+        event.preventDefault();
     }
 
     // right
     if (event.key === 'ArrowRight') {
         direction = (lastDir !== 'left' || body.length === 1) ? 'right' : 'left';
+        event.preventDefault();
     }
 
 }
@@ -75,12 +104,14 @@ function draw() {
     drawSnake();
     checkApple();
     checkCollision();
+    setScore()
+    setHighScore();
 }
 
 
 function drawSnake() {
     if (direction === 'down') {
-        if (yPlayer < 500-gridHeight) {
+        if (yPlayer < 500-speed) {
             yPlayer += speed;
         } else {
             lost();
@@ -105,7 +136,7 @@ function drawSnake() {
 
     // right
     if (direction === 'right') {
-        if (xPlayer + gridWidth + speed <= width) {
+        if (xPlayer + speed + speed <= width) {
             xPlayer += speed;
         } else {
             lost();
@@ -116,10 +147,10 @@ function drawSnake() {
     drawBody();
 }
 
-function addChild() {
+function addChild(x = undefined, y = undefined) {
     let imageChild = new Image();
     imageChild.src = 'images/body.png';
-    let child = {'x': lastX, 'y': lastY, 'image': imageChild, };
+    let child = {'x': x, 'y': y, 'image': imageChild};
     body.push(child);
 }
 
@@ -145,13 +176,16 @@ function drawApple() {
             y = Math.floor((Math.random()*height)/25)*25;
         } while(body.some(e => e.x === x) && body.some(e => e.y === y));
 
-        let image = new Image();
-        image.src = 'images/pcoin.png';
-        apple = {'x': x, 'y': y, 'image': image};
-        appleExists = true;
+        createApple(x, y);
     }
-
     ctx.drawImage(apple.image, apple.x, apple.y);
+}
+
+function createApple(x, y) {
+    let image = new Image();
+    image.src = 'images/pcoin.png';
+    apple = {'x': x, 'y': y, 'image': image};
+    appleExists = true;
 }
 
 function checkApple() {
@@ -162,13 +196,26 @@ function checkApple() {
 }
 
 function checkCollision() {
-    if (body.filter(e => body.filter(k => e.x === k.x && e.y === k.y).length >= 2).length >= 2) {
+    let tempArray = body.slice(0, body.length-1);
+    let temp = tempArray.filter(e => e.x === body[body.length-1].x && e.y === body[body.length-1].y);
+    if (temp.length > 0) {
         lost();
     }
-
 }
 
 function lost() {
     console.log('lost');
     init()
+}
+
+function setScore() {
+    document.getElementById('score').innerHTML = 'Score: ' + (body.length-1).toString();
+}
+
+function setHighScore() {
+    let highScore = document.getElementById('highscore');
+    if (body.length-1 > score) {
+        score = body.length-1;
+        highScore.innerHTML = 'Highscore: ' + score.toString();
+    }
 }
