@@ -28,3 +28,7 @@ main {
     margin: 0 auto;
 }
 
+
+main section {
+    width: 150px;
+}
