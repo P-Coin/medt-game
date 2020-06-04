@@ -21,10 +21,28 @@ Raffael Kusolitsch & Bernhard Hösch
     </nav>
 </header>
 
-<main>
-    <canvas width="900" height="500" id="game">
-        <p>Your browser doesn't support Canvas!</p>
-    </canvas>
-</main>
+<div id="container">
+    <main>
+        <canvas width="900" height="500" id="game">
+            <p>Your browser doesn't support Canvas!</p>
+        </canvas>
+    </main>
+
+    <section id="difficulty">
+        <h2>Difficulty</h2>
+        <form action="">
+
+            <label for="easy">Easy</label>
+            <input type="radio" id="easy" name="difficulty" value="easy">
+
+            <label for="medium">Medium</label>
+            <input type="radio" id="medium" name="difficulty" value="medium">
+
+            <label for="hard">Hard</label>
+            <input type="radio" id="hard" name="difficulty" value="hard">
+
+        </form>
+    </section>
+</div>
 </body>
 </html>

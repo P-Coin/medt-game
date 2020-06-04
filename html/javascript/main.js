@@ -1,5 +1,7 @@
 'use strict'
 
+// TODO: Leaderboards, Powerups, Difficulty
+
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 
@@ -13,13 +15,15 @@ const gridHeight = 25;
 let imagePlayer;
 const speed = 25;
 let direction = undefined;
+let lastDir = undefined;
 let appleExists = false;
 let apple;
+
 
 let body = [];
 let lastX;
 let lastY;
-
+let requestId = undefined;
 
 function init() {
     body = [];
@@ -32,38 +36,41 @@ function init() {
     imagePlayer.src = 'images/body.png';
     let child = {'x': xPlayer, 'y': yPlayer, 'image': imagePlayer};
     body.push(child);
+
+    let speed = 50;
+    window.setInterval(draw, speed);
+    requestId = requestAnimationFrame(draw);
 }
 
 window.addEventListener('keydown', changeDirection);
 
-requestAnimationFrame(draw);
-window.setInterval(draw, 50);
 
 function changeDirection(event) {
+    lastDir = direction;
     // down
     if (event.key === 'ArrowDown') {
-        direction = 'down';
+        direction = (lastDir !== 'up' || body.length === 1) ? 'down' : 'up';
     }
     // up
     if (event.key === 'ArrowUp') {
-        direction = 'up';
+        direction = (lastDir !== 'down' || body.length === 1) ? 'up' : 'down';
     }
     // left
     if (event.key === 'ArrowLeft') {
-        direction = 'left'
+        direction = (lastDir !== 'right' || body.length === 1) ? 'left' : 'right';
     }
 
     // right
     if (event.key === 'ArrowRight') {
-        direction = 'right';
+        direction = (lastDir !== 'left' || body.length === 1) ? 'right' : 'left';
     }
 
 }
 
 function draw() {
     ctx.clearRect(0, 0, width, height);
-    drawSnake();
     drawApple();
+    drawSnake();
     checkApple();
     checkCollision();
 }
@@ -72,10 +79,7 @@ function draw() {
 function drawSnake() {
     if (direction === 'down') {
         if (yPlayer < 500-gridHeight) {
-            if (!body.filter(e => body.filter(k => k !== e && e.x === k.x && e.y === yPlayer + speed || console.log("k:", k," e:", e)))) {
-
-                yPlayer += speed;
-            }
+            yPlayer += speed;
         } else {
             lost();
         }

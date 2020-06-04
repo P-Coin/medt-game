@@ -6,3 +6,18 @@ canvas {
     box-sizing: border-box;
     border: 2px solid black;
 }
+
+#container {
+    display: flex;
+    flex-direction: column-reverse;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+#difficulty {
+    margin: 0 auto;
+}
+
+#difficulty h2 {
+    text-align: center;
+}
