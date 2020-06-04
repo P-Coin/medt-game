@@ -24,6 +24,7 @@ let body = [];
 let lastX;
 let lastY;
 let requestId = undefined;
+let intervalID = undefined;
 
 function init() {
     body = [];
@@ -36,9 +37,10 @@ function init() {
     imagePlayer.src = 'images/body.png';
     let child = {'x': xPlayer, 'y': yPlayer, 'image': imagePlayer};
     body.push(child);
-
+    window.clearInterval(intervalID);
+    window.cancelAnimationFrame(requestId);
     let speed = 50;
-    window.setInterval(draw, speed);
+    intervalID = window.setInterval(draw, speed);
     requestId = requestAnimationFrame(draw);
 }
 
