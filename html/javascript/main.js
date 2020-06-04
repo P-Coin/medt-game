@@ -40,28 +40,34 @@ function startAnimation() {
 }
 
 function getSpeed() {
-    let difficulty = document.getElementsByName('difficulty');
+    let difficulty = getDifficulty();
     let speed = 0;
-    for(let i = 0; i < difficulty.length; i++) {
-        if (difficulty[i].checked) {
-            switch(difficulty[i].value) {
-                case 'easy':
-                    speed = 80;
-                    break;
-                case 'medium':
-                    speed = 70;
-                    break;
-                case 'hard':
-                    speed = 40;
-                    break;
-                case 'expert':
-                    speed = 20;
-                    break;
-            }
-        }
+    switch(difficulty.value) {
+        case 'easy':
+            speed = 80;
+            break;
+        case 'medium':
+            speed = 65;
+            break;
+        case 'hard':
+            speed = 45;
+            break;
+        case 'expert':
+            speed = 35;
+            break;
     }
 
     return speed;
+}
+
+function getDifficulty() {
+    let difficulty = document.getElementsByName('difficulty');
+    for(let i = 0; i < difficulty.length; i++) {
+        if (difficulty[i].checked) {
+            return difficulty[i];
+        }
+    }
+    return difficulty;
 }
 
 function stopAnimation() {
@@ -104,8 +110,6 @@ function draw() {
     drawSnake();
     checkApple();
     checkCollision();
-    setScore()
-    setHighScore();
 }
 
 
@@ -152,6 +156,8 @@ function addChild(x = undefined, y = undefined) {
     imageChild.src = 'images/body.png';
     let child = {'x': x, 'y': y, 'image': imageChild};
     body.push(child);
+    setScore()
+    setHighScore();
 }
 
 function drawBody() {
