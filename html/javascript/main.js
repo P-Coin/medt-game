@@ -142,6 +142,8 @@ function moveDown() {
         if(lastMove !== 'up') {
             yPlayer += speed;
             lastMove = 'down';
+        } else {
+            moveUp();
         }
     } else {
         lost();
@@ -153,6 +155,8 @@ function moveUp() {
         if (lastMove !== 'down') {
             yPlayer -= speed;
             lastMove = 'up';
+        } else {
+            moveDown();
         }
     } else {
         lost();
@@ -164,6 +168,8 @@ function moveLeft() {
         if (lastMove !== 'right') {
             xPlayer -= speed;
             lastMove = 'left';
+        } else {
+            moveRight();
         }
     } else {
         lost();
@@ -175,6 +181,8 @@ function moveRight() {
         if (lastMove !== 'left') {
             xPlayer += speed;
             lastMove = 'right';
+        } else {
+            moveLeft();
         }
     } else {
         lost();
