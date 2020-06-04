@@ -16,6 +16,7 @@ let lastDir = undefined;
 let appleExists = false;
 let apple;
 let score = 0;
+let lastMove = undefined;
 
 let body = [];
 let requestId = undefined;
@@ -27,6 +28,7 @@ function init() {
     yPlayer = 100;
     direction = undefined;
     appleExists = false;
+    lastMove = undefined;
 
     addChild(xPlayer, yPlayer);
     stopAnimation();
@@ -44,16 +46,16 @@ function getSpeed() {
     let speed = 0;
     switch(difficulty.value) {
         case 'easy':
-            speed = 80;
+            speed = 110;
             break;
         case 'medium':
-            speed = 65;
+            speed = 85;
             break;
         case 'hard':
-            speed = 45;
+            speed = 60;
             break;
         case 'expert':
-            speed = 35;
+            speed = 45;
             break;
     }
 
@@ -115,40 +117,68 @@ function draw() {
 
 function drawSnake() {
     if (direction === 'down') {
-        if (yPlayer < 500-speed) {
-            yPlayer += speed;
-        } else {
-            lost();
-        }
+        moveDown();
     }
     // up
     if (direction === 'up') {
-        if (yPlayer - speed >= 0) {
-            yPlayer -= speed;
-        } else {
-            lost();
-        }
+        moveUp();
     }
     // left
     if (direction === 'left') {
-        if (xPlayer - speed >= 0) {
-            xPlayer -= speed;
-        } else {
-            lost();
-        }
+        moveLeft();
     }
 
     // right
     if (direction === 'right') {
-        if (xPlayer + speed + speed <= width) {
-            xPlayer += speed;
-        } else {
-            lost();
-        }
+        moveRight();
     }
 
     moveBody();
     drawBody();
+}
+
+function moveDown() {
+    if (yPlayer < 500-speed) {
+        if(lastMove !== 'up') {
+            yPlayer += speed;
+            lastMove = 'down';
+        }
+    } else {
+        lost();
+    }
+}
+
+function moveUp() {
+    if (yPlayer - speed >= 0) {
+        if (lastMove !== 'down') {
+            yPlayer -= speed;
+            lastMove = 'up';
+        }
+    } else {
+        lost();
+    }
+}
+
+function moveLeft() {
+    if (xPlayer - speed >= 0) {
+        if (lastMove !== 'right') {
+            xPlayer -= speed;
+            lastMove = 'left';
+        }
+    } else {
+        lost();
+    }
+}
+
+function moveRight() {
+    if (xPlayer + speed + speed <= width) {
+        if (lastMove !== 'left') {
+            xPlayer += speed;
+            lastMove = 'right';
+        }
+    } else {
+        lost();
+    }
 }
 
 function addChild(x = undefined, y = undefined) {
@@ -197,13 +227,16 @@ function createApple(x, y) {
 function checkApple() {
     if(body[body.length-1].x === apple.x && body[body.length-1].y === apple.y) {
         appleExists = false;
-        addChild();
+        for(let i = 0; i < 3; i++) {
+            addChild();
+        }
     }
 }
 
 function checkCollision() {
     let tempArray = body.slice(0, body.length-1);
-    let temp = tempArray.filter(e => e.x === body[body.length-1].x && e.y === body[body.length-1].y);
+    let temp = tempArray.filter(e => e.x === body[body.length-1].x && e.y === body[body.length-1].y
+                                && e.x !== undefined && e.y !== undefined);
     if (temp.length > 0) {
         lost();
     }
