@@ -1,38 +1,47 @@
 'use strict'
 
-// TODO: Leaderboard, Power ups
+// TODO: Power ups
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
-
 const width = 900;
 const height = 500;
+const grid = 25;
 
-let xPlayer;
-let yPlayer;
-const speed = 25;
-let direction = undefined;
-let lastDir = undefined;
-let appleExists = false;
+let body;
+let xHead;
+let yHead;
+let direction;
+let appleExists;
 let apple;
-let score = 0;
-let lastMove = undefined;
+let score;
+let image;
 
-let body = [];
+let lastDir;
+let lastMove;
+
 let requestId = undefined;
 let intervalID = undefined;
 
+window.addEventListener('keydown', changeDirection);
+
+
 function init() {
+    initVariables();
+    addChild(xHead, yHead);
+    stopAnimation();
+    startAnimation();
+}
+
+function initVariables() {
     body = [];
-    xPlayer = 100;
-    yPlayer = 100;
+    xHead = 100;
+    yHead = 100;
+    score = 0;
     direction = undefined;
     appleExists = false;
     lastMove = undefined;
-
-    addChild(xPlayer, yPlayer);
-    stopAnimation();
-    startAnimation();
+    lastDir = undefined;
 }
 
 function startAnimation() {
@@ -77,7 +86,6 @@ function stopAnimation() {
     window.cancelAnimationFrame(requestId);
 }
 
-window.addEventListener('keydown', changeDirection);
 
 function changeDirection(event) {
     lastDir = direction;
@@ -138,9 +146,9 @@ function drawSnake() {
 }
 
 function moveDown() {
-    if (yPlayer < 500-speed) {
+    if (yHead < 500-grid) {
         if(lastMove !== 'up') {
-            yPlayer += speed;
+            yHead += grid;
             lastMove = 'down';
         } else {
             moveUp();
@@ -151,9 +159,9 @@ function moveDown() {
 }
 
 function moveUp() {
-    if (yPlayer - speed >= 0) {
+    if (yHead - grid >= 0) {
         if (lastMove !== 'down') {
-            yPlayer -= speed;
+            yHead -= grid;
             lastMove = 'up';
         } else {
             moveDown();
@@ -164,9 +172,9 @@ function moveUp() {
 }
 
 function moveLeft() {
-    if (xPlayer - speed >= 0) {
+    if (xHead - grid >= 0) {
         if (lastMove !== 'right') {
-            xPlayer -= speed;
+            xHead -= grid;
             lastMove = 'left';
         } else {
             moveRight();
@@ -177,9 +185,9 @@ function moveLeft() {
 }
 
 function moveRight() {
-    if (xPlayer + speed + speed <= width) {
+    if (xHead + grid + grid <= width) {
         if (lastMove !== 'left') {
-            xPlayer += speed;
+            xHead += grid;
             lastMove = 'right';
         } else {
             moveLeft();
@@ -206,8 +214,8 @@ function drawBody() {
 
 function moveBody() {
     let child = body.shift();
-    child.x = xPlayer;
-    child.y = yPlayer;
+    child.x = xHead;
+    child.y = yHead;
     body.push(child);
 }
 
@@ -251,18 +259,18 @@ function checkCollision() {
 }
 
 function lost() {
-    console.log('lost');
+    // TODO ausgabe
     init()
 }
 
 function setScore() {
-    document.getElementById('score').innerHTML = 'Score: ' + (body.length-1).toString();
+    document.getElementById('score').innerHTML = 'Score: ' + (body.length).toString();
 }
 
 function setHighScore() {
     let highScore = document.getElementById('highscore');
-    if (body.length-1 > score) {
-        score = body.length-1;
+    if (body.length > score) {
+        score = body.length;
         highScore.innerHTML = 'Highscore: ' + score.toString();
     }
 }
