@@ -211,7 +211,21 @@ function addChild(x = undefined, y = undefined) {
 
 function drawBody() {
     body.forEach(function(entry) {
-        ctx.drawImage(entry.image, entry.x, entry.y);
+        if (entry === body[body.length-1]) {
+            image = new Image();
+            if(direction === 'left') {
+                image.src = 'images/headleft.png';
+            } else if (direction === 'right') {
+                image.src = 'images/headright.png';
+            } else if (direction === 'down') {
+                image.src = 'images/headdown.png';
+            } else {
+                image.src = 'images/headup.png';
+            }
+            ctx.drawImage(image, entry.x, entry.y);
+        } else {
+            ctx.drawImage(entry.image, entry.x, entry.y);
+        }
     });
 }
 
