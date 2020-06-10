@@ -16,6 +16,7 @@ let appleExists;
 let apple;
 let score;
 let image;
+let highscore;
 
 let lastDir;
 let lastMove;
@@ -31,13 +32,15 @@ function init() {
     addChild(xHead, yHead);
     stopAnimation();
     startAnimation();
+    document.getElementById('highscore').innerHTML = 'Highscore: ' + score.toString();
 }
 
 function initVariables() {
     body = [];
     xHead = 100;
     yHead = 100;
-    score = 0;
+    score = localStorage.getItem('highscore');
+    if (score == null) score = 1;
     direction = undefined;
     appleExists = false;
     lastMove = undefined;
@@ -272,5 +275,7 @@ function setHighScore() {
     if (body.length > score) {
         score = body.length;
         highScore.innerHTML = 'Highscore: ' + score.toString();
+        localStorage.setItem('highscore', score);
     }
+
 }
