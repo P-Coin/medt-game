@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Projekt</title>
     <link rel="stylesheet" href="./css/navigation.css">
+    <link rel="stylesheet" href="./css/project.css">
 </head>
 <body>
 
@@ -13,6 +14,98 @@
         <div id="project-link"><a href="project.html">Project</a></div>
     </nav>
 </header>
+
+    <h1 id="heading">Protokoll</h1>
+
+    <p>
+    <div class="schritt">
+        <h2>Schritt 1: Ablauf und Start des Programmes</h2>
+
+        Die Website startet sofort mit dem Ausführen der "draw" Methode.<br>
+<br>
+        Diese führt folgende Methoden unendlich oft aus:
+            <ul>
+                <li>clearRect(0,0,width,height);   --Bereinigt das Spielfeld zum aufzeichen der nächsten Aktion</li>
+                <li>drawApple();    --Platziert den Apfel auf das Spielfeld</li>
+                <li>drawSnake();    --Platziert den Schlangenkopf auf dem Spielfeld</li>
+                <li>checkApple();    --Überprüft ob sich der Schlangenkopf sich auf dem </li>
+                <li>checkCollision();    --Überprüft ob ein Teil der Schlange mit etwas anderem Kollodiert ist</li>
+            </ul>
+
+        getSpeed() liest die Schwirigkeit mittels getDifficulty() ein und verwendet die dem entsprechende Geschwinddikeit.<br>
+        Die Geschwindigkeit gibt das Intervall an in welchen die draw Methode aufgerufen wird.<br>
+
+        </div>
+    </p>
+        <br>
+    <p>
+        <div class="schritt">
+    <h2>Schritt 2: Bewegen der Schlange</h2>
+
+    Die Skript der Webseite überprüft durchengehen ob das Event "keydown" getriggert wurde.<br>
+    Dieses Event reagiert wenn eine Taste gedrückt wurde. Der Eventlistener führt beim auslösen des Events die Methode changeDirection() aus.<br>
+    Die Methode überpüft welche Taste gedrückt wurde und falls dies eine Pfeil- oder WASD- Taste ist wird der Schlangenkopf in die<br> dementsprechende Richtung gedreht.
+    Es wird zusätzlich überprüft ob die neue Richtung überhaupt auch zulässig ist, z.B. Wenn die Schlange sich nach<br> links bewegt und sich nun
+    nach rechts (in sich selbst hinein) bewegen soll.<br>
+    <br>
+    Das Programm speichert in welche Richtung sich die Schlange bewegen soll und ändert diese von selbst nicht.<br>
+    Die in der "draw" Methode aufgerufene "drawSnake" Methode liest aus in welche richtung die Schlangenkopf gerichtet ist<br>
+    und bewegt diese um ein Feld weiter egal welche Taste gedrückt wurde. <br>
+
+
+
+    <br>
+
+        </div>
+    </p>
+    <p>
+    <div class="schritt">
+        <h2>Schritt 3: Platzieren des Apfels</h2>
+
+        drawApple() hat die funktion zu Überprüfen ob ein Apfel sich bereits auf dem Spielfeld befindet.<br>
+        Falls dies nicht der Fall ist erzeugt es von Zufall generierte X und Y Koordinaten für den Apfel<br>
+        und positioniert diesen dort dann.<br>
+    </div>
+    </p>
+    <p>
+    <div class="schritt">
+        <h2>Schritt 4: Punkte erhalten</h2>
+
+        checkApple() wird verwendet um zu überprüfen ob sich der Kopf der Schlange auf der Position des Apfels befindet.<br>
+        Trifft dies zu wird Die Schlange wird mit addChild verlängert  und der Score wird mit der neuen Länge der Schlange ersetzt.<br>
+
+        Zu beginn einer neuen Runde wird der Highscore mit dem Score der vorherigen Runde ersetz,<br>
+        falls dieser denn größer ist.
+    </div>
+    </p>
+    <p>
+    <div class="schritt">
+        <h2>Schritt 5: Game Over</h2>
+
+        Nach jedem Schritt den die Schlange mach wird überprüft ob diese nun mit etwas kollidiert.<br>
+        checkCollision() findet dies heraus in dem es jedes Körperteil der Schlange überprüft.<br>
+        Hat es eine Kollision entdeckt wird durch die Funktion "lost" die Funktion "init" aufgerufen,<br>
+        welche alles zurücksetzt.<br>
+
+    </div>
+    </p>
+    <p>
+    <div class="schritt">
+        <h2>Schritt 6: Neustart des Spiels</h2>
+
+        die Methode init() besteht aus vier weiteren Funktionen:
+    <ul>
+        <li>initVariables();   --Setzt die gespeicherten Werte auf den Standard zurück</li>
+        <li>addChild();    --Platziert den Kopf der Schlange auf das Spielfeld</li>
+        <li>stopAnimation();    --Pausiert das Programm um die Schwirigkeit einzulesen</li>
+        <li>startAnimation();    --Übernimmt die ausgewählte Schwierigkeit und verwendet eine neue Geschwindkeit </li>
+
+    </ul>
+
+    </div>
+    </p>
+
+
 
 </body>
 </html>
