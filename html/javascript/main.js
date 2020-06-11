@@ -15,24 +15,35 @@ let direction;
 let appleExists;
 let apple;
 let score;
-let image;
 let highscore;
 
 let lastDir;
 let lastMove;
-
 let requestId = undefined;
 let intervalID = undefined;
 
 window.addEventListener('keydown', changeDirection);
 
-
 function init() {
+    preloadImages();
     initVariables();
     addChild(xHead, yHead);
     stopAnimation();
     startAnimation();
     document.getElementById('highscore').innerHTML = 'Highscore: ' + score.toString();
+}
+
+function preloadImages() {
+    preloadImage('images/headleft.png');
+    preloadImage('images/body.png');
+    preloadImage('images/headdown.png');
+    preloadImage('images/headup.png');
+    preloadImage('images/headright.png');
+}
+
+function preloadImage(url) {
+    let img=new Image();
+    img.src=url;
 }
 
 function initVariables() {
@@ -114,7 +125,6 @@ function changeDirection(event) {
         direction = (lastDir !== 'left' || body.length === 1) ? 'right' : 'left';
         event.preventDefault();
     }
-
 }
 
 function draw() {
@@ -124,7 +134,6 @@ function draw() {
     checkApple();
     checkCollision();
 }
-
 
 function drawSnake() {
     if (direction === 'down') {
@@ -212,15 +221,31 @@ function addChild(x = undefined, y = undefined) {
 function drawBody() {
     body.forEach(function(entry) {
         if (entry === body[body.length-1]) {
-            image = new Image();
+            let image = new Image();
             if(direction === 'left') {
-                image.src = 'images/headleft.png';
+                if (lastMove !== 'right') {
+                    image.src = 'images/headleft.png';
+                } else {
+                    image.src = 'images/headright.png';
+                }
             } else if (direction === 'right') {
-                image.src = 'images/headright.png';
+                if (lastMove !== 'left') {
+                    image.src = 'images/headright.png';
+                } else {
+                    image.src = 'images/headleft.png';
+                }
             } else if (direction === 'down') {
-                image.src = 'images/headdown.png';
+                if (lastMove !== 'up') {
+                    image.src = 'images/headdown.png';
+                } else {
+                    image.src = 'images/headup.png';
+                }
             } else {
-                image.src = 'images/headup.png';
+                if (lastMove !== 'down') {
+                    image.src = 'images/headup.png';
+                } else {
+                    image.src = 'images/headdown.png';
+                }
             }
             ctx.drawImage(image, entry.x, entry.y);
         } else {
@@ -291,5 +316,4 @@ function setHighScore() {
         highScore.innerHTML = 'Highscore: ' + score.toString();
         localStorage.setItem('highscore', score);
     }
-
 }
