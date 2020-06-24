@@ -32,3 +32,23 @@ main {
 main section {
     width: 150px;
 }
+
+@media (max-width: 1050px) and (min-width: 910px){
+    #scores{
+        display: flex;
+        flex-wrap: wrap;
+
+    }
+
+    h1{
+        text-align: center;
+        flex: none;
+    }
+
+    section{
+        flex: none;
+        flex-grow: 1;
+    }
+
+
+}
