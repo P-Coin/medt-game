@@ -15,29 +15,43 @@ let direction;
 let appleExists;
 let apple;
 let score;
-let image;
+let highscore;
 
 let lastDir;
 let lastMove;
-
 let requestId = undefined;
 let intervalID = undefined;
 
 window.addEventListener('keydown', changeDirection);
 
-
 function init() {
+    preloadImages();
     initVariables();
     addChild(xHead, yHead);
     stopAnimation();
     startAnimation();
+    document.getElementById('highscore').innerHTML = 'Highscore: ' + score.toString();
+}
+
+function preloadImages() {
+    preloadImage('images/headleft.png');
+    preloadImage('images/body.png');
+    preloadImage('images/headdown.png');
+    preloadImage('images/headup.png');
+    preloadImage('images/headright.png');
+}
+
+function preloadImage(url) {
+    let img=new Image();
+    img.src=url;
 }
 
 function initVariables() {
     body = [];
     xHead = 100;
     yHead = 100;
-    score = 0;
+    score = localStorage.getItem('highscore');
+    if (score == null) score = 1;
     direction = undefined;
     appleExists = false;
     lastMove = undefined;
@@ -89,8 +103,8 @@ function stopAnimation() {
 
 function changeDirection(event) {
     lastDir = direction;
-    // down
 
+    // down
     if (event.key === 'ArrowDown' || event.key.toLowerCase() === 's') {
         direction = (lastDir !== 'up' || body.length === 1) ? 'down' : 'up';
         event.preventDefault();
@@ -111,7 +125,6 @@ function changeDirection(event) {
         direction = (lastDir !== 'left' || body.length === 1) ? 'right' : 'left';
         event.preventDefault();
     }
-
 }
 
 function draw() {
@@ -121,7 +134,6 @@ function draw() {
     checkApple();
     checkCollision();
 }
-
 
 function drawSnake() {
     if (direction === 'down') {
@@ -208,7 +220,37 @@ function addChild(x = undefined, y = undefined) {
 
 function drawBody() {
     body.forEach(function(entry) {
-        ctx.drawImage(entry.image, entry.x, entry.y);
+        if (entry === body[body.length-1]) {
+            let image = new Image();
+            if(direction === 'left') {
+                if (lastMove !== 'right') {
+                    image.src = 'images/headleft.png';
+                } else {
+                    image.src = 'images/headright.png';
+                }
+            } else if (direction === 'right') {
+                if (lastMove !== 'left') {
+                    image.src = 'images/headright.png';
+                } else {
+                    image.src = 'images/headleft.png';
+                }
+            } else if (direction === 'down') {
+                if (lastMove !== 'up') {
+                    image.src = 'images/headdown.png';
+                } else {
+                    image.src = 'images/headup.png';
+                }
+            } else {
+                if (lastMove !== 'down') {
+                    image.src = 'images/headup.png';
+                } else {
+                    image.src = 'images/headdown.png';
+                }
+            }
+            ctx.drawImage(image, entry.x, entry.y);
+        } else {
+            ctx.drawImage(entry.image, entry.x, entry.y);
+        }
     });
 }
 
@@ -272,5 +314,6 @@ function setHighScore() {
     if (body.length > score) {
         score = body.length;
         highScore.innerHTML = 'Highscore: ' + score.toString();
+        localStorage.setItem('highscore', score);
     }
 }
