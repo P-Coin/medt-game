@@ -25,14 +25,14 @@
 <br>
         Diese führt folgende Methoden unendlich oft aus:
             <ul>
-                <li>clearRect(0,0,width,height);   --Bereinigt das Spielfeld zum aufzeichen der nächsten Aktion</li>
+                <li>clearRect(0,0,width,height);   --Bereinigt das Spielfeld zum Aufzeichen der nächsten Aktion</li>
                 <li>drawApple();    --Platziert den Apfel auf das Spielfeld</li>
                 <li>drawSnake();    --Platziert den Schlangenkopf auf dem Spielfeld</li>
-                <li>checkApple();    --Überprüft ob sich der Schlangenkopf sich auf dem </li>
+                <li>checkApple();    --Überprüft ob sich der Schlangenkopf sich auf der Position des Apfels befindet</li>
                 <li>checkCollision();    --Überprüft ob ein Teil der Schlange mit etwas anderem Kollodiert ist</li>
             </ul>
 
-        getSpeed() liest die Schwirigkeit mittels getDifficulty() ein und verwendet die dem entsprechende Geschwinddikeit.<br>
+        getSpeed() liest die Schwierigkeit mittels getDifficulty() ein und verwendet die dementsprechende Geschwindikeit.<br>
         Die Geschwindigkeit gibt das Intervall an in welchen die draw Methode aufgerufen wird.<br>
 
         </div>
@@ -42,14 +42,14 @@
         <div class="schritt">
     <h2>Schritt 2: Bewegen der Schlange</h2>
 
-    Die Skript der Webseite überprüft durchengehen ob das Event "keydown" getriggert wurde.<br>
+    Das Skript der Webseite überprüft durchengehend ob das Event "keydown" getriggert wurde.<br>
     Dieses Event reagiert wenn eine Taste gedrückt wurde. Der Eventlistener führt beim auslösen des Events die Methode changeDirection() aus.<br>
     Die Methode überpüft welche Taste gedrückt wurde und falls dies eine Pfeil- oder WASD- Taste ist wird der Schlangenkopf in die<br> dementsprechende Richtung gedreht.
     Es wird zusätzlich überprüft ob die neue Richtung überhaupt auch zulässig ist, z.B. Wenn die Schlange sich nach<br> links bewegt und sich nun
     nach rechts (in sich selbst hinein) bewegen soll.<br>
     <br>
     Das Programm speichert in welche Richtung sich die Schlange bewegen soll und ändert diese von selbst nicht.<br>
-    Die in der "draw" Methode aufgerufene "drawSnake" Methode liest aus in welche richtung die Schlangenkopf gerichtet ist<br>
+    Die in der "draw" Methode aufgerufene "drawSnake" Methode liest aus in welche richtung der Schlangenkopf gerichtet ist<br>
     und bewegt diese um ein Feld weiter egal welche Taste gedrückt wurde. <br>
 
 
@@ -72,7 +72,7 @@
         <h2>Schritt 4: Punkte erhalten</h2>
 
         checkApple() wird verwendet um zu überprüfen ob sich der Kopf der Schlange auf der Position des Apfels befindet.<br>
-        Trifft dies zu wird Die Schlange wird mit addChild verlängert  und der Score wird mit der neuen Länge der Schlange ersetzt.<br>
+        Trifft dies zu wird die Schlange mit addChild verlängert  und der Score wird mit der neuen Länge der Schlange ersetzt.<br>
 
         Zu beginn einer neuen Runde wird der Highscore mit dem Score der vorherigen Runde ersetz,<br>
         falls dieser denn größer ist.
@@ -82,7 +82,7 @@
     <div class="schritt">
         <h2>Schritt 5: Game Over</h2>
 
-        Nach jedem Schritt den die Schlange mach wird überprüft ob diese nun mit etwas kollidiert.<br>
+        Nach jedem Schritt den die Schlange macht wird überprüft ob diese nun mit etwas kollidiert.<br>
         checkCollision() findet dies heraus in dem es jedes Körperteil der Schlange überprüft.<br>
         Hat es eine Kollision entdeckt wird durch die Funktion "lost" die Funktion "init" aufgerufen,<br>
         welche alles zurücksetzt.<br>
