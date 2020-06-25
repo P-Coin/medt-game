@@ -33,6 +33,8 @@ nav {
     justify-content: center;
 }
 
+
+
 nav div {
     width: 20%;
     height: 50px;
@@ -41,3 +43,4 @@ nav div {
     text-align: center;
     justify-content: center;
 }
+

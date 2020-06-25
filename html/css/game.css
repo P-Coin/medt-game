@@ -50,5 +50,9 @@ main section {
         flex-grow: 1;
     }
 
+}
 
+.richtung   {
+    font-weight: bold;
+    //color: yellow;
 }

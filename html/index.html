@@ -2,7 +2,6 @@
 Raffael Kusolitsch & Bernhard Hösch
 28.05.2020
 TODO: guide erstellen (Steuerung, ...)
-TODO: darkmode
 -->
 
 <!DOCTYPE html>
@@ -25,6 +24,18 @@ TODO: darkmode
 
 <div id="container">
     <main id="scores">
+
+        <section>
+            <h2>Steuerung</h2>
+            <p>
+                W-A-S-D oder Pfeiltasten/↓↑→ ←
+            </p>
+                W --- Die Schlange bewegt sich nach <span class="richtung">oben</span>.<br>
+                A --- Die Schlange bewegt sich nach <span class="richtung">links</span>.<br>
+                S --- Die Schlange bewegt sich nach <span class="richtung">unten</span>.<br>
+                D --- Die Schlange bewegt sich nach <span class="richtung">rechts</span>.<br>
+        </section>
+
         <canvas width="900" height="500" id="game" tabindex="0">
             <p>Your browser doesn't support Canvas!</p>
         </canvas>
@@ -55,5 +66,6 @@ TODO: darkmode
         </form>
     </section>
 </div>
+
 </body>
 </html>
